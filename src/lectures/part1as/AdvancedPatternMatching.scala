@@ -44,4 +44,35 @@ object AdvancedPatternMatching extends App {
   val result1= bob.age match {
     case Person(status)=>println(status)
   }
+
+  /*
+      Exercise
+   */
+
+  val n:Int=3
+
+   val mathPropert = n match{
+     case x if x < 10 => "single dignit"
+     case x if x % 2==0 => "an even number"
+     case _=> "no  propery"
+   }
+
+
+  object even {
+    def unapply(arg: Int): Boolean = arg % 2==0
+
+  }
+
+  object singleDignit {
+    def unapply(arg: Int): Boolean = arg > -10  && arg < 10
+  }
+
+
+  val mathPropert1 = n match {
+    case even() =>  "an even number"
+    case singleDignit() =>  "single dignit"
+    case _=> "no  propery"
+  }
+
+  println(mathPropert1)
 }
