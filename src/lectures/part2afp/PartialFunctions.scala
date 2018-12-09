@@ -75,9 +75,22 @@ object PartialFunctions  extends App{
 
   val aPartialFunctionEx1= new PartialFunction[Int,Int] {
 
-    override def isDefinedAt(x: Int) = ???
+    override def isDefinedAt(x: Int) = x==42 || x==56 || x== 100
 
-   override def apply(v1: Int) = ???
+
+   override def apply(x: Int) = x match{
+     case 1=>42
+     case 2=>56
+     case 3=>1000
+   }
   }
 
+  val chatbot:PartialFunction[String,String]={
+    case "Hello"=>"Hello human, robot here"
+    case "Goodbye"=>"Bye"
+  }
+
+  //scala.io.Source.stdin.getLines().foreach(line=>println("Chatbot said " +chatbot(line)))
+  // equal as sentence above
+  scala.io.Source.stdin.getLines().map(chatbot).foreach(println)
 }
