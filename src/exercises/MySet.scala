@@ -29,6 +29,8 @@ trait MySet[A] extends (A => Boolean) {
 
   def --(another: MySet[A]): MySet[A]
 
+  def unary_! : MySet[A]
+
 }
 
 class EmptySet[A] extends MySet[A] {
@@ -48,9 +50,11 @@ class EmptySet[A] extends MySet[A] {
 
   override def -(element: A): MySet[A] = this
 
-  override def &(another: MySet[A]): MySet[A] = ???
+  override def &(another: MySet[A]): MySet[A] = this
 
-  override def --(another: MySet[A]): MySet[A] = another
+  override def --(another: MySet[A]): MySet[A] = this
+
+  override def unary_! : MySet[A] = this
 }
 
 class NonEmptySet[A](head: A, tail: MySet[A]) extends MySet[A] {
@@ -76,11 +80,15 @@ class NonEmptySet[A](head: A, tail: MySet[A]) extends MySet[A] {
     tail foreach f
   }
 
-  override def -(element: A): MySet[A] = ???
+  override def -(element: A): MySet[A] =
+    if(head ==  element) tail
+    else tail - element + head
 
-  override def &(another: MySet[A]): MySet[A] = ???
+  override def &(another: MySet[A]): MySet[A] = filter(!another)//filter(x=>another.contains(x))
 
-  override def --(another: MySet[A]): MySet[A] = ???
+  override def --(another: MySet[A]): MySet[A] = filter(another)//filter(x=>another.contains(x))
+
+  override def unary_! : MySet[A] = ???
 }
 
 object MySet {
